@@ -45,14 +45,6 @@ class PDF extends FPDF
       $this->SetX(175);
       $this->cell(55,9,'Rev. 3',0,0);
    }
-   
-   function Renglon($mensaje)
-   {
-     $y += 2;
-     $this->SetY($yy);
-     $this->SetX(10);
-     $this->cell(120,6,$mensaje,'0',1);
-   }
 }
 
 $pdf=new PDF('p','mm','Letter');
