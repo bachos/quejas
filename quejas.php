@@ -1,7 +1,7 @@
 <?php
 require('../pdf/fpdf.php');
 
-$fecha = date('d/m/y');
+
 class PDF extends FPDF
 { 
    var $widths;
@@ -10,7 +10,7 @@ class PDF extends FPDF
    function Header()
    {  
        $this->Rect(10,12,195,21);
-       #$this->Image('../../imagenes/logotec.jpg',10,13,33);
+       $this->Image('../images/logotec.jpg',18,12,20);
        $this->Line(10,12,10,33);
        $this->Line(10,12,45,12);
        $this->Line(45,12,45,33);
@@ -47,6 +47,9 @@ class PDF extends FPDF
    }
 }
 
+function generaPDF($nombre, $telefono, $mail, $coment, $nocontrol, $esp )
+{
+$fecha = date('d/m/y');
 $pdf=new PDF('p','mm','Letter');
 $pdf->AddPage();
 $pdf->AliasNbPages();
@@ -72,26 +75,26 @@ $pdf->multicell(200,5,$mensaje,'0',1);
 $y = $pdf->GetY() + 2;
 $pdf->SetY($y);
 $pdf->SetX(115);
-$pdf->cell(80,6,'Correo Electrónico: ',0,1);
+$pdf->cell(80,6,'Correo Electrónico:   '.$mail,0,1);
 $pdf->Line(144,$y+5,195,$y+5);
 $pdf->SetY($y);
 $pdf->SetX(10);
-$pdf->cell(80,6,'Nombre: ',0,1);
+$pdf->cell(180,6,'Nombre:   '.$nombre,0,1);
 $pdf->Line(24,$y+5,110,$y+5);
 $y += 8;
 $pdf->SetY($y);
 $pdf->SetX(10);
-$pdf->cell(120,6,"Tel.:",'0',1);
+$pdf->cell(120,6,"Tel.:   ".$telefono,'0',1);
 $pdf->Line(18,$y+5,60,$y+5);
 $y += 8;
 $pdf->SetY($y);
 $pdf->SetX(10);
-$pdf->cell(120,6,"No. de Control:",'0',1);
+$pdf->cell(120,6,"No. de Control:   ".$nocontrol,'0',1);
 $pdf->Line(33,$y+5,80,$y+5);
 $y += 8;
 $pdf->SetY($y);
 $pdf->SetX(10);
-$pdf->cell(120,6,"Carrera:",'0',1);
+$pdf->cell(120,6,"Carrera:   ".$esp,'0',1);
 $pdf->Line(23,$y+5,125,$y+5);
 $y += 12;
 $pdf->SetY($y);
@@ -114,7 +117,8 @@ $y += 8;
 $pdf->Rect(10,$y,195,40);
 $pdf->SetY($y);
 $pdf->SetX(93);
-$pdf->Cell(120,6,"QUEJA  /  SUGERENCIA:",'0',1);
+$pdf->Cell(120,6,"QUEJA  /  SUGERENCIA:",'0',2);
+$pdf->Cell(194,6,$coment,'0',1);
 $y += 44;
 $pdf->SetY($y);
 $pdf->SetX(10);
@@ -161,5 +165,7 @@ $pdf->SetX(140);
 $pdf->Cell(7,6,"Fecha:",'0',0);
 $y += 5;
 $pdf->Line(151,$y,205,$y);
-$pdf->Output();
+
+return $pdf->Output("", "S");
+}
 ?>
